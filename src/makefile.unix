@@ -108,7 +108,6 @@ OBJS= \
     obj/key.o \
     obj/db.o \
     obj/init.o \
-    obj/irc.o \
     obj/keystore.o \
     obj/miner.o \
     obj/main.o \
@@ -148,9 +147,9 @@ OBJS= \
     obj/masternodeconfig.o \
     obj/masternode.o \
     obj/rpcdarksend.o \
-    obj/spork.o 
+    obj/spork.o
 
-all: Neutrond
+all: neutrond
 
 LIBS += $(CURDIR)/leveldb/libleveldb.a $(CURDIR)/leveldb/libmemenv.a
 DEFS += $(addprefix -I,$(CURDIR)/leveldb/include)
@@ -191,11 +190,11 @@ obj/zerocoin/%.o: zerocoin/%.cpp
 	      -e '/^$$/ d' -e 's/$$/ :/' < $(@:%.o=%.d) >> $(@:%.o=%.P); \
 	  rm -f $(@:%.o=%.d)
 
-Neutrond: $(OBJS:obj/%=obj/%)
+neutrond: $(OBJS:obj/%=obj/%)
 	$(LINK) $(xCXXFLAGS) -o $@ $^ $(xLDFLAGS) $(LIBS)
 
 clean:
-	-rm -f Neutrond
+	-rm -f neutrond
 	-rm -f obj/*.o
 	-rm -f obj/zerocoin/*.o
 	-rm -f obj/*.P
